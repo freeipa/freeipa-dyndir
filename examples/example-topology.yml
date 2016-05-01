@@ -1,0 +1,19 @@
+dns_forwarder: 8.8.8.8
+domains:
+- hosts:
+  - external_hostname: vm-059.example.com.
+    ip: 10.34.141.59
+    name: vm-059.example.com.
+    role: master
+  - external_hostname: vm-093.example.com.
+    ip: 10.34.141.93
+    name: vm-093.example.com.
+    role: replica
+  - external_hostname: vm-038.example.com.
+    ip: 10.34.141.38
+    name: vm-038.example.com.
+    role: replica
+  name: dom-059.example.com
+  type: IPA
+ntp_server: clock.example.com
+root_ssh_key_filename: /var/lib/jenkins/.ssh/test_ssh_key
