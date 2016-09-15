@@ -30,33 +30,33 @@ test_data_copr = [
 ]
 
 
-class TestUpdatesTestingPlugin:
-    def test_invalid_config(self):
-        with pytest.raises(PluginConfigError):
-            UpdatesTestingRepositoryPlugin({})
+def test_updates_testing_invalid_config():
+    with pytest.raises(PluginConfigError):
+        UpdatesTestingRepositoryPlugin({})
 
-    @pytest.mark.parametrize(
-        'conf,host,exp_res', test_data_updates_testing)
-    def test_updates_config_configured(self, conf, host, exp_res):
-        pl = UpdatesTestingRepositoryPlugin(conf)
-        res = pl(host)
+
+@pytest.mark.parametrize(
+    'conf,host,exp_res', test_data_updates_testing)
+def test_updates_config_configured(conf, host, exp_res):
+    pl = UpdatesTestingRepositoryPlugin(conf)
+    res = pl(host)
+    assert (
+        res['enable_updates_testing'] == exp_res['enable_updates_testing'])
+
+
+def test_copr_plugin_invalid_config():
+    with pytest.raises(PluginConfigError):
+        COPRPlugin({})
+
+
+@pytest.mark.parametrize(
+    'conf,host,exp_res', test_data_copr)
+def test_copr_repo_configs(conf, host, exp_res):
+    pl = COPRPlugin(conf)
+    res = pl(host)
+
+    if not exp_res:
+        assert not res
+    else:
         assert (
-            res['enable_updates_testing'] == exp_res['enable_updates_testing'])
-
-
-class TestCOPRPlugin:
-    def test_invalid_config(self):
-        with pytest.raises(PluginConfigError):
-            COPRPlugin({})
-
-    @pytest.mark.parametrize(
-        'conf,host,exp_res', test_data_copr)
-    def test_copr_repo_configs(self, conf, host, exp_res):
-        pl = COPRPlugin(conf)
-        res = pl(host)
-
-        if not exp_res:
-            assert not res
-        else:
-            assert (
-                res['copr_repositories'] == exp_res['copr_repositories'])
+            res['copr_repositories'] == exp_res['copr_repositories'])
