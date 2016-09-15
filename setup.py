@@ -1,6 +1,7 @@
-# coding utf-8
+# coding: utf-8
+# Author: Milan Kubik
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('README.md') as f:
     long_description = f.read()
@@ -22,18 +23,20 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
     ],
 
-    packages=['ipaqe_dyndir'],
+    packages=find_packages(exclude=['tests']),
 
     install_requires=['PyYAML'],
 
     entry_points={
         'console_scripts': [
             'ipaqe-dyndir = ipaqe_dyndir.__main__:main'
+        ],
+        'org.freeipa.dyndir.plugins': [
+            'updates-testing = ipaqe_dyndir.builtin.repos:UpdatesTestingRepositoryPlugin',
+            'copr = ipaqe_dyndir.builtin.repos:COPRPlugin'
         ]
     }
 )
