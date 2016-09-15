@@ -2,8 +2,9 @@
 # Author: Milan Kubik
 
 import os
-import yaml
 from functools import partial
+
+import yaml
 
 here = os.path.abspath(os.path.dirname(__file__))
 test_data_dir = os.path.join(here, 'test_data')
