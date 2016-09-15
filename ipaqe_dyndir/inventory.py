@@ -45,7 +45,7 @@ class Inventory:
 
     group_to_packages_map = {
         'servers': ('freeipa-server-dns',),
-        'trust-servers': ('freeipa-server-trust-ad',),
+        'trust-servers': ('freeipa-server-trust-ad', 'freeipa-server-dns'),
         'clients': ('freeipa-client',)
     }
 
