@@ -1,26 +1,23 @@
 # coding: utf-8
 # Author: Milan Kubik
 
-import pytest
-
 from ipaqe_dyndir.inventory import Inventory
 from .util import get_test_data
 
 
-@pytest.fixture(scope='class')
-def empty_inventory():
-    return Inventory({})
+def test_empty_inventory_data():
+    inventory = Inventory({})
+    assert inventory.data == {}
 
 
-class TestEmptyInventory:
-    def test_inventory_data(self, empty_inventory):
-        assert empty_inventory.data == {}
+def test_empty_inventory_metadata():
+    inventory = Inventory({})
+    assert inventory.metadata == {}
 
-    def test_inventory_metadata(self, empty_inventory):
-        assert empty_inventory.metadata == {}
 
-    def test_full_representation(self, empty_inventory):
-        assert empty_inventory.to_dict() == {}
+def test_full_representation():
+    inventory = Inventory({})
+    assert inventory.to_dict() == {}
 
 
 inventory_no_plugins = dict(
@@ -45,12 +42,9 @@ simple_client_host_res = {
 }
 
 
-# TODO: Parametrize this
-class TestPopulatedInventory:
+def test_populated_inventory_no_plugins():
+    inv = Inventory({})
+    inv.add_host(simple_client_host)
 
-    def test_no_plugins(self):
-        inv = Inventory({})
-        inv.add_host(simple_client_host)
-
-        inventory = inv.to_dict()
-        assert inventory == simple_client_host_res
+    inventory = inv.to_dict()
+    assert inventory == simple_client_host_res
