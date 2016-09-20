@@ -9,7 +9,7 @@ with open('README.md') as f:
 
 setup(
     name='ipaqe-dyndir',
-    version='0.0.1',
+    version='0.1.0',
     description='Ansible dynamic inventory for FreeIPA',
     long_description=long_description,
     keywords='freeipa tests ansible',
@@ -20,10 +20,11 @@ setup(
     url='https://github.com/apophys/ipaqe-dyndir',
 
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 3 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
     ],
 
     packages=find_packages(exclude=['tests']),
