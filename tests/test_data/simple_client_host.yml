@@ -1,0 +1,4 @@
+external_hostname: vm-059.example.com.
+ip: 10.34.141.59
+name: vm-059.example.com.
+role: client

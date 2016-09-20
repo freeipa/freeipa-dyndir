@@ -25,6 +25,10 @@ IPATEST_YAML_CONF -- the environment variable used by the freeipa integration
 tests is used by the dynamic inventory as well. The script simply reads the
 data and converts them to the required format.
 
+IPAQE_DYNDIR_CONF -- the environment variable specifying the configuration
+file when the default configuration in /etc should not be used.
+The environment variable allows to pass different configuration
+to ansible.
 
 ### /etc/ipaqe-dyndir.conf
 This is the main configuration file. The file contains options
