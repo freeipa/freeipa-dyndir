@@ -21,7 +21,7 @@ class PluginManager:
     It is possible to specify custom endpoint.
     """
     def __init__(self, config, resource_group=None):
-        self._config = config
+        self._config = config if config else {}
         self._active_plugins = []
         self._inactive_plugins = []
         self.load_plugins(resource_group or DEFAULT_RESOURCE_GROUP)
