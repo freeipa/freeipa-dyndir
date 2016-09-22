@@ -24,6 +24,13 @@ class InventoryUnknownHostRoleError(InventoryError):
     pass
 
 
+def get_host_fqdn(host):
+    try:
+        return host['external_hostname']
+    except KeyError:
+        return host['name']
+
+
 class Inventory:
     """Class representing the ansible inventory.
 
@@ -98,9 +105,10 @@ class Inventory:
 
     def _add_host_to_group(self, host, group):
         try:
-            self.data[group].append(host['name'])
+            hostname = get_host_fqdn(host)
+            self.data[group].append(hostname)
         except KeyError:
-            self.data[group] = [host['name']]
+            self.data[group] = [hostname]
 
     def _bootstrap_metadata_dict(self):
         if 'hostvars' not in self.metadata:
@@ -120,12 +128,12 @@ class Inventory:
         self._bootstrap_metadata_dict()
 
         hostvars = self._metadata['hostvars']
-        host_name = host['name']
+        host_name = get_host_fqdn(host)
 
         if host_name in hostvars:
             raise InventoryHostAlreadyExistsError(
                 'The host {name} already exists and has metadata.'
-                .format(name=host['name']))
+                .format(name=host_name))
 
         log.info('Adding packages {packages} for host {name}'
                  .format(packages=packages, name=host_name))
@@ -137,7 +145,7 @@ class Inventory:
         If the dictionary for a host doesn't exist, the function
         will create it.
         """
-        hostname = host['name']
+        hostname = get_host_fqdn(host)
         log.debug('Updating metadata for host {}'
                   .format(hostname))
         self._bootstrap_metadata_dict()
