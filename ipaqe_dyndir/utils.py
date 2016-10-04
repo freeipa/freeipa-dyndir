@@ -35,7 +35,7 @@ def load_config(path=None):
     document, the function will fail.
     """
     filename_etc = '/etc/ipaqe-dyndir.conf'
-    filename_env = os.environ.get('IPAQE_DYNDIR_CONF')
+    filename_env = os.environ.get('IPAQE_DYNDIR_CONFIG')
 
     if path:
         filename = path
