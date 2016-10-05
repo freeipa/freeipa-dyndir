@@ -23,4 +23,4 @@ class PluginBase:  # pylint: disable=R0903
         its keys. This allows plugins to work with
         the host based on its role.
         """
-        raise RuntimeError('You need to subclass this method.')
+        raise RuntimeError('You need to implement this method in a subclass.')
