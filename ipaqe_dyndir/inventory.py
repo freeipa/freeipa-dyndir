@@ -48,12 +48,20 @@ class Inventory:
         'replica': 'servers',
         'trust_master': 'trust-servers',
         'client': 'clients',
+        # Ignore known ad and legacy domain roles
+        'ad': 'ignored',
+        'ad_subdomain': 'ignored',
+        'ad_treedomain': 'ignored',
+        'legacy_client_sssd_redhat': 'ignored',
+        'legacy_client_nss_ldap_redhat': 'ignored',
+        'legacy_client_nss_pam_ldapd_redhat': 'ignored'
     }
 
     group_to_packages_map = {
         'servers': ('freeipa-server-dns',),
         'trust-servers': ('freeipa-server-trust-ad', 'freeipa-server-dns'),
-        'clients': ('freeipa-client',)
+        'clients': ('freeipa-client',),
+        'ignored': ()
     }
 
     def __init__(self, config, *, quiet=False):
