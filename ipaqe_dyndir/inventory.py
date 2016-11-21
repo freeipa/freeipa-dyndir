@@ -58,7 +58,7 @@ class Inventory:
     }
 
     group_to_packages_map = {
-        'servers': ('freeipa-server-dns',),
+        'servers': ('freeipa-server-dns', 'python-ipatests'),
         'trust-servers': ('freeipa-server-trust-ad', 'freeipa-server-dns'),
         'clients': ('freeipa-client',),
         'ignored': ()
