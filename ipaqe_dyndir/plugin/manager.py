@@ -1,5 +1,6 @@
 # coding: utf-8
 # Author: Milan Kubik
+from __future__ import absolute_import
 
 import logging
 
@@ -12,7 +13,7 @@ DEFAULT_RESOURCE_GROUP = 'org.freeipa.dyndir.plugins'
 log = logging.getLogger(__name__)
 
 
-class PluginManager:
+class PluginManager(object):
     """Dynamic Directory Plugin Manager
 
     The class acts as a loader of the plugins registered

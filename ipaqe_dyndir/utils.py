@@ -1,9 +1,15 @@
 # coding: utf-8
 # Author: Milan Kubik
+from __future__ import absolute_import
 
 import os
 import logging
 import yaml
+
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = IOError  # pylint: disable=redefined-builtin
 
 log = logging.getLogger(__name__)
 

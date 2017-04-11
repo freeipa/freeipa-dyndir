@@ -5,7 +5,7 @@ class PluginConfigError(ValueError):
     pass
 
 
-class PluginBase:  # pylint: disable=R0903
+class PluginBase(object):  # pylint: disable=R0903
     """Dynamic Directory plugin base class
 
     All plugins must inherit from this class and

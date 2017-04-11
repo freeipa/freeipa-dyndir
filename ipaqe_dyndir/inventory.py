@@ -1,13 +1,21 @@
 # coding: utf-8
 # Author: Milan Kubik
+from __future__ import absolute_import
 
 import logging
 import os
+
 from pprint import pformat
 
 import yaml
 
 from ipaqe_dyndir.plugin.manager import PluginManager
+
+
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = IOError  # pylint: disable=redefined-builtin
 
 log = logging.getLogger(__name__)
 
@@ -31,7 +39,7 @@ def get_host_fqdn(host):
         return host['name']
 
 
-class Inventory:
+class Inventory(object):
     """Class representing the ansible inventory.
 
     The class builds an ansible inventory from hosts
@@ -64,7 +72,7 @@ class Inventory:
         'ignored': ()
     }
 
-    def __init__(self, config, *, quiet=False):
+    def __init__(self, config, quiet=False):
         self._data = {}
         self._metadata = {}
         self._config = config
