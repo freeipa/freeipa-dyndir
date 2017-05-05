@@ -38,7 +38,7 @@ def main():
     loglevel = None
     if args.loglevel:
         try:
-            loglevel = getattr(logging, args.loglevel)
+            loglevel = getattr(logging, args.loglevel.upper())
         except AttributeError:
             loglevel = logging.ERROR
         finally:
