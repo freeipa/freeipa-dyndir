@@ -54,7 +54,6 @@ class Inventory(object):
     role_to_group_map = {
         'master': 'servers',
         'replica': 'servers',
-        'trust_master': 'trust-servers',
         'client': 'clients',
         # Ignore known ad and legacy domain roles
         'ad': 'ignored',
@@ -66,8 +65,10 @@ class Inventory(object):
     }
 
     group_to_packages_map = {
-        'servers': ('freeipa-server-dns', 'python-ipatests'),
-        'trust-servers': ('freeipa-server-trust-ad', 'freeipa-server-dns'),
+        'servers':
+            ('freeipa-server-dns',
+             'freeipa-server-trust-ad',
+             'python-ipatests'),
         'clients': ('freeipa-client',),
         'ignored': ()
     }
