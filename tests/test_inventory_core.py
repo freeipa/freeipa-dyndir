@@ -31,14 +31,7 @@ inventory_no_plugins = dict(
 
 simple_client_host = dict(get_test_data('simple_client_host.yml'))
 simple_client_host_res = {
-    'clients': [simple_client_host['name']],
-    '_meta': {
-        'hostvars': {
-            simple_client_host['name']: {
-                'packages': ('freeipa-client',)
-            }
-        }
-    }
+    'clients': [simple_client_host['name']]
 }
 
 

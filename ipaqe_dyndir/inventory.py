@@ -64,15 +64,6 @@ class Inventory(object):
         'legacy_client_nss_pam_ldapd_redhat': 'ignored'
     }
 
-    group_to_packages_map = {
-        'servers':
-            ('freeipa-server-dns',
-             'freeipa-server-trust-ad',
-             'python-ipatests'),
-        'clients': ('freeipa-client',),
-        'ignored': ()
-    }
-
     def __init__(self, config, quiet=False):
         self._data = {}
         self._metadata = {}
@@ -107,10 +98,8 @@ class Inventory(object):
                       .format(host=host['name'], htype=host['role']))
 
             group = self._get_host_group(host['role'])
-            packages = self._get_host_packages(group)
 
             self._add_host_to_group(host, group)
-            self._generate_host_packages_metadata(host, packages)
 
             log.info('Running metadata plugins for host {}'
                      .format(host['name']))
@@ -132,30 +121,6 @@ class Inventory(object):
             log.debug('Bootstraping hostvars in metadata')
             self._metadata['hostvars'] = {}
 
-    def _generate_host_packages_metadata(self, host, packages):
-        """Add the host package list to metadata
-
-
-        If the metadata dictionary is empty, bootstrap the
-        hostvars key.
-        """
-        log.info('Generating package metadata for host {name}'
-                 .format(name=host['name']))
-
-        self._bootstrap_metadata_dict()
-
-        hostvars = self._metadata['hostvars']
-        host_name = get_host_fqdn(host)
-
-        if host_name in hostvars:
-            raise InventoryHostAlreadyExistsError(
-                'The host {name} already exists and has metadata.'
-                .format(name=host_name))
-
-        log.info('Adding packages {packages} for host {name}'
-                 .format(packages=packages, name=host_name))
-        hostvars[host_name] = dict(packages=packages)
-
     def _update_metadata_for_host(self, host, metadata):
         """In place update of host metadata
 
@@ -165,15 +130,20 @@ class Inventory(object):
         hostname = get_host_fqdn(host)
         log.debug('Updating metadata for host {}'
                   .format(hostname))
-        self._bootstrap_metadata_dict()
 
-        try:
-            host_vars = self.metadata['hostvars'][hostname]
-        except KeyError:
-            self._metadata['hostvars'][hostname] = {}
-            host_vars = self.metadata['hostvars'][hostname]
+        if not metadata:
+            log.debug('No metadata to add to host {}.'
+                      .format(hostname))
+        else:
+            self._bootstrap_metadata_dict()
 
-        host_vars.update(metadata)
+            try:
+                host_vars = self.metadata['hostvars'][hostname]
+            except KeyError:
+                self._metadata['hostvars'][hostname] = {}
+                host_vars = self.metadata['hostvars'][hostname]
+
+            host_vars.update(metadata)
 
     def _get_host_group(self, role):
         """Map host role to inventory group
@@ -187,9 +157,6 @@ class Inventory(object):
             log.debug("Unknown role '{}'".format(role))
             raise InventoryUnknownHostRoleError(
                 'Unknown role {}'.format(role))
-
-    def _get_host_packages(self, group):
-        return self.group_to_packages_map[group]
 
     def to_dict(self):
         """Exports the inventory data to a single dictionary"""
