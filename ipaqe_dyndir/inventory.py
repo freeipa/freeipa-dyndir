@@ -99,6 +99,12 @@ class Inventory(object):
 
             group = self._get_host_group(host['role'])
 
+            if group == 'ignored':
+                log.info('Host {hostname} is from ignored groups.'
+                         'It will not be added to the inventory'
+                         .format(hostname=host['name']))
+                return
+
             self._add_host_to_group(host, group)
 
             log.info('Running metadata plugins for host {}'
