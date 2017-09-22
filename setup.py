@@ -9,7 +9,7 @@ with open('README.md') as f:
 
 setup(
     name='ipaqe-dyndir',
-    version='0.2.0',
+    version='0.2.1',
     description='Ansible dynamic inventory for FreeIPA',
     long_description=long_description,
     keywords='freeipa tests ansible',
